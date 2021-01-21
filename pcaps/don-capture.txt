@@ -1,0 +1,82 @@
+No        Time         Description
+-------------------------------------------------------------------------------------------------
+4    SEND: Username, password
+14   RECV: Added Zita from the site
+16   RECV: Some contact_book thing, for 1411+10
+19   RECV: Don, probably added from the site.
+23   RECV: Same as above.
+27   RECV: Same as above.
+29   RECV: Added Zita from the site
+34   RECV: Same as above
+39   RECV: Same as above
+(sending 10 messages, with subject and content: 1, 2, 3...)
+44   SEND: PRAYMESG
+(9 PRAYMESG more)
+
+(opened chat with Don)
+64   SEND: PRAYREQU
+86   SEND: PRAYCHAT
+(several more)
+189  SEND: PRAYREQU
+197  RECV: PRAYGLST (Creature)
+377  RECV: PRAYGLST
+471  SEND: PRAYGLST
+
+
+
+
+3956.87 RECV: PRAYREQU, must be reject
+236900 4005.29 RECV: PRAYREQU
+234875 3931.52 SEND: PRAYREQU
+236903 4006.65 RECV: Probably add message, for ol_daniel08
+
+(sending chat requests to Don, so that she rejects them)
+238835 4059.55 SEND: PRAYCHAT
+
+
+
+
+
+
+231244 Sending lots of messages to Don
+232988 Finished with the messages.
+235360 Opened chat with Don
+(rejected chat from cooldaniel)
+237630 Starting chat message test with don
+238982 Ended chat message test with don
+238982 Don started message test
+241125 Message test ended
+241128 chat closed
+242442 Sending chat requests to Don, she will reject them.
+246286 chat ignored
+247908 chat ignored
+248893 rejected
+250378 rejected
+250378 Asked Don for a norn
+259446 Got the norn
+259446 Rejected norn
+259890 Don sent the norn again
+262830 Got the norn.
+264381 Sent the norn to Don
+266700 Got norn back (rejected? server error?)
+266887 Send norn to Don
+268048 Norn has been sent
+268048 Don got the norn, rejecting.
+272051 Got the norn back.
+290080 Norn entered portal to Don
+290152 Norn sent
+315232 Got norn from portal from Don
+329422 Don went offline
+330122 Don went online
+335965 Don is sending messages
+339882 Got 5 messages from Don
+353670 Leaving DS a bit with portals/chamber disabled to see if we get pings/keepalives
+357468 Looks like I got a Norn, but I don't see it. Must be that the server still sends you norns even if you don't want them.
+
+
+
+
+
+
+
+

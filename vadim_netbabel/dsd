@@ -1,0 +1,111 @@
+#!/usr/bin/perl -W -T
+package Valhalla;
+
+use strict;
+use lib qw(.);
+use Net::Server::PreFork;
+use Creatures::DS::Netbabel;
+use base qw(Net::Server::PreFork);
+
+Valhalla->run(port => 49152, log_level => 4);
+exit(0);
+
+sub process_request {
+	my $self = shift;
+	my $data = "";
+	my $nb = new Creatures::DS::Netbabel;
+	my ($npk, $length, $hlen);
+	my $min_len = 0;
+	my $got_head;
+	
+	eval {
+		local $SIG{ALRM} = sub { die "Timeout!\n" };
+		local $/ = "\0";
+
+		my $timeout = 30;
+
+		my $prev_alarm = alarm($timeout);
+
+		while($data .= <STDIN>) {
+			warn "Got ". length($data) . " bytes";
+
+			if (not $got_head && length($data) >= $min_len) {
+				($npk, $length, $hlen) = $nb->decode(\$data);
+				if (defined $npk) {
+					# We got the header decoded, now wait
+					# until we get all the data.
+					$got_head = 1;
+				} else {
+					# We didn't have enough data, wait until
+					# we can fetch it
+					$min_len = $hlen;
+				}
+			}
+
+			if ($got_head && length($data) >= $length) {
+				my $reply = undef;
+				my $reply2 = undef;
+				
+
+				# Full packet received, process now.
+				warn "Got a " . $npk->type() . " packet";
+
+				for ($npk->type()) {
+					if (/auth/) {
+						my $s = {};
+
+						warn "U: ". $npk->username() . " P:" . $npk->password();
+						$reply = $nb->make('auth_reply');
+						$reply->receiver_uid(1001);
+						$reply->receiver_hid(1);
+						$s->{1} = {
+							port          => 49152,
+							address       => '127.0.0.1',
+							friendlyname  => 'whiterabbit'
+						};
+						$reply->servers($s);
+
+					} elsif (/login2/) {
+						$reply = $nb->make('login2');
+						warn "some field:" . $npk->unknown1();
+						$reply->unknown1($npk->unknown1());
+						
+#						$reply2 = $nb->make_message(1,1,27,1, "Hello, world!");
+						
+					}
+				}
+
+				foreach my $packet ($reply, $reply2) {
+#				if (defined $reply) {
+					if (defined $packet) {
+						warn "Encoding " . $packet->type() . " packet";
+						$packet->encode();
+						warn "Sending packet";
+						print STDOUT ${$packet->packet()};
+					}
+				}
+
+				# Remove processed packet from buffer
+				warn "Next packet";
+				$data = substr($data, $length);
+				undef $got_head;
+			}
+
+			alarm($timeout);
+		}
+		warn "Disconnected";
+		alarm($prev_alarm);
+	};
+
+	if ($@ =~ /Timeout/) {
+		warn "Timed out.";
+		print STDOUT "Timed out\r\n";
+		return;
+	} else {
+		warn "Something went wrong:\n$@";
+	}
+}
+
+1;
+
+# vim: ts=4
