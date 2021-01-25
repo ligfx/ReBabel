@@ -26,8 +26,8 @@ Assuming that the first 4 Bytes are determining the Package Type, these Package 
 |-|-|-|-|
 |09  | - |CS|`PRAYMESG`,`PRAYREQU`,`PRAYCHAT`, `PRAYGLST`, |
 |0A  | `NET: LINE` |S| - Login Reply (see 25)|
-|0D  | - |CS|User Online Status maybe ?|
-|0E  | - |CS|User Online Status maybe ?|
+|0D  | - |S|User Online Status maybe ?|
+|0E  | - |S|User Online Status maybe ?|
 |0F  | - |CS|--|
 |_0F_| `NET: UNIK` |C| Request: Get me the User Info for the ID <X> (maybe `NET: UNIK`) ?|
 |_0F_| `NET: UNIK` |S| Response: Here are the User Info for the User <X> (response to **0F** request)|
@@ -36,14 +36,9 @@ Assuming that the first 4 Bytes are determining the Package Type, these Package 
 |18  | - |CS|`NET: STAT`|
 |_18_| `NET: STAT` |C| Length is always 32 Appart from the `ECHO Load` and the `package counter` the Request seems to be Empty.|
 |_18_| `NET: STAT` |S| The Server response does not contain the ECHO Load, but has the `package counter`. |
-|1F  | - |S|Package No. 450|
 |2102| `NET: RUSO` |CS|Get a Random User ID|
+|2103| - |C|History of Creature|
 |25  | `NET: LINE` |C|Login Request|
-|2D| - |S|Packet No. 721|
-|30| - |S|Packet No. 1441|
-|35| - |C|Packet No. 1285, Posibly a Live Event?|
-|70| - |C|Packet No. 273 Maybe Live Event?|
-
 
 ## Login request Package
 
